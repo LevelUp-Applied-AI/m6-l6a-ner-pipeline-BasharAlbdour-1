@@ -41,8 +41,8 @@ When the ruler runs **after** NER, the opposite happens. NER has already claimed
 The position comparison from Text 5 shows this clearly:
  
 ```
-Ruler BEFORE: Paris Agreement → LAW ✅, Bonn Climate Change Conference → EVENT ✅
-Ruler AFTER:  the Paris Agreement → EVENT ❌, the Bonn Climate Change Conference → ORG ❌
+Ruler BEFORE: Paris Agreement → LAW , Bonn Climate Change Conference → EVENT 
+Ruler AFTER:  the Paris Agreement → EVENT , the Bonn Climate Change Conference → ORG 
 ```
  
 In production, the right position depends on confidence. If you trust your rules more than the model for specific entity types, put the ruler first. If the model is generally reliable and you only want to add new entity types the model has never seen, put it after. For this corpus, before is clearly correct — the model's errors on climate terminology are systematic, not edge cases.
