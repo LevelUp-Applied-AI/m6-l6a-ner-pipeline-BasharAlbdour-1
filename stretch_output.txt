@@ -1,0 +1,159 @@
+=================================================================
+BASE MODEL DIAGNOSTIC (first 10 English texts)
+=================================================================
+
+Text 1: The IPCC released its Sixth Assessment Report in March 2023, warning that global temperatures could exceed 1.5 degrees C...
+  Entities: [('IPCC', 'ORG'), ('Sixth Assessment Report', 'EVENT'), ('March 2023', 'DATE'), ('1.5 degrees', 'QUANTITY'), ('2030', 'DATE'), ('Antonio Guterres', 'PERSON'), ('COP', 'ORG')]
+
+Text 2: At COP28 in Dubai, over 190 nations agreed to transition away from fossil fuels in energy systems. The United Arab Emira...
+  Entities: [('Dubai', 'GPE'), ('190', 'CARDINAL'), ('The United Arab Emirates', 'GPE'), ('two weeks', 'DATE'), ('2030', 'DATE')]
+
+Text 3: The World Bank announced a $12.5 billion climate adaptation fund in June 2024, targeting vulnerable nations in Sub-Sahar...
+  Entities: [('The World Bank', 'ORG'), ('$12.5 billion', 'MONEY'), ('June 2024', 'DATE'), ('Sub-Saharan Africa', 'ORG'), ('South Asia', 'LOC'), ('World Bank', 'ORG'), ('Ajay Banga', 'PERSON')]
+
+Text 4: Jordan's National Climate Change Policy, adopted in 2022, commits the country to reducing greenhouse gas emissions by 31...
+  Entities: [('Jordan', 'GPE'), ('National Climate Change Policy', 'ORG'), ('2022', 'DATE'), ('31%', 'PERCENT'), ('2030', 'DATE'), ('The Ministry of Environment', 'ORG'), ('UNDP', 'ORG'), ('the European Union', 'ORG')]
+
+Text 5: UNFCCC Executive Secretary Simon Stiell addressed delegates at the Bonn Climate Change Conference in June 2024, emphasiz...
+  Entities: [('UNFCCC', 'ORG'), ('Simon Stiell', 'PERSON'), ('the Bonn Climate Change Conference', 'ORG'), ('June 2024', 'DATE'), ('the Paris Agreement', 'EVENT'), ('February 2025', 'DATE')]
+
+Text 6: The European Union's Carbon Border Adjustment Mechanism entered its transitional phase in October 2023, requiring import...
+  Entities: [("The European Union's", 'ORG'), ('Carbon Border Adjustment Mechanism', 'ORG'), ('October 2023', 'DATE'), ('EU', 'ORG'), ('January 2026', 'DATE')]
+
+Text 7: In September 2023, the United Nations General Assembly hosted the Climate Ambition Summit in New York, where only nation...
+  Entities: [('September 2023', 'DATE'), ('the United Nations General Assembly', 'ORG'), ('the Climate Ambition Summit', 'ORG'), ('New York', 'GPE'), ('the Paris Agreement', 'EVENT')]
+
+Text 8: FAO published its State of Food and Agriculture 2023 report, dedicating an entire chapter to the intersection of climate...
+  Entities: [('FAO', 'ORG'), ('State of Food and Agriculture 2023', 'ORG'), ('735 million', 'CARDINAL'), ('2022', 'DATE'), ('FAO', 'ORG'), ('Qu Dongyu', 'PERSON'), ('$4 billion', 'MONEY'), ('annual', 'DATE')]
+
+Text 9: The Green Climate Fund approved $1.2 billion in new project funding during its October 2023 board meeting in Songdo, Sou...
+  Entities: [('The Green Climate Fund', 'ORG'), ('$1.2 billion', 'MONEY'), ('October 2023', 'DATE'), ('Songdo', 'GPE'), ('South Korea', 'GPE'), ('$150 million', 'MONEY'), ('Bangladesh', 'GPE'), ('$90 million', 'MONEY'), ('the Congo Basin', 'LOC'), ('$45 million', 'MONEY'), ('Jordan', 'GPE'), ('$12 billion', 'MONEY')]
+
+Text 10: China's Special Envoy for Climate Change Xie Zhenhua met with US Climate Envoy John Kerry in Sunnylands, California in N...
+  Entities: [('China', 'GPE'), ('Change Xie Zhenhua', 'PERSON'), ('US', 'GPE'), ('John Kerry', 'PERSON'), ('Sunnylands', 'GPE'), ('California', 'GPE'), ('November 2023', 'DATE'), ('the Paris Agreement', 'EVENT')]
+
+Total patterns defined : 26
+Custom entries         : 14 across 3 types
+  CLIMATE_EVENT x5 : COP+N regex, Global Stocktake, Climate Week,
+                     World Climate Summit, Pre-COP+N
+  POLICY        x7 : NDC full form, Loss and Damage, net zero,
+                     net-zero, carbon neutral/neutrality
+  REPORT        x4 : IPCC AR+N, Sixth/Fifth Assessment Report,
+                     State of Food and Agriculture (+year)
+Std corrections        : LAW   (Paris Agr, Kyoto, Carbon Border, Nat'l Policy)
+                         EVENT (Climate Ambition Summit, Bonn Conference)
+                         LOC   (Sub-Saharan Africa, South Asia, Congo Basin, Sunnylands)
+                         GPE   (United Arab Emirates bare form)
+Removed                : THRESHOLD — stole QUANTITY spans without improving recall
+
+=================================================================
+RULER POSITION COMPARISON (texts 2, 5, 6, 7)
+=================================================================
+
+--- Ruler BEFORE NER ---
+  Text 2 | Custom:   [('COP28', 'CLIMATE_EVENT')]
+           | Standard: [('Dubai', 'GPE'), ('United Arab Emirates', 'GPE'), ('two weeks', 'DATE'), ('2030', 'DATE')]
+  Text 5 | Custom:   [('nationally determined contributions', 'POLICY'), ('loss and damage', 'POLICY')]
+           | Standard: [('UNFCCC', 'ORG'), ('Simon Stiell', 'PERSON'), ('Bonn Climate Change Conference', 'EVENT'), ('June 2024', 'DATE'), ('Paris Agreement', 'LAW'), ('February 2025', 'DATE')]
+  Text 6 | Custom:   []
+           | Standard: [("The European Union's", 'ORG'), ('Carbon Border Adjustment Mechanism', 'LAW'), ('October 2023', 'DATE'), ('EU', 'ORG'), ('January 2026', 'DATE')]
+  Text 7 | Custom:   []
+           | Standard: [('September 2023', 'DATE'), ('the United Nations General Assembly', 'ORG'), ('Climate Ambition Summit', 'EVENT'), ('New York', 'GPE'), ('Paris Agreement', 'LAW')]
+
+--- Ruler AFTER NER ---
+  Text 2 | Custom:   [('COP28', 'CLIMATE_EVENT')]
+           | Standard: [('Dubai', 'GPE'), ('The United Arab Emirates', 'GPE'), ('two weeks', 'DATE'), ('2030', 'DATE')]
+  Text 5 | Custom:   [('nationally determined contributions', 'POLICY'), ('loss and damage', 'POLICY')]
+           | Standard: [('UNFCCC', 'ORG'), ('Simon Stiell', 'PERSON'), ('the Bonn Climate Change Conference', 'ORG'), ('June 2024', 'DATE'), ('the Paris Agreement', 'EVENT'), ('February 2025', 'DATE')]
+  Text 6 | Custom:   []
+           | Standard: [("The European Union's", 'ORG'), ('Carbon Border Adjustment Mechanism', 'ORG'), ('October 2023', 'DATE'), ('EU', 'ORG'), ('January 2026', 'DATE')]
+  Text 7 | Custom:   []
+           | Standard: [('September 2023', 'DATE'), ('the United Nations General Assembly', 'ORG'), ('the Climate Ambition Summit', 'ORG'), ('New York', 'GPE'), ('the Paris Agreement', 'EVENT')]
+
+=================================================================
+GOLD STANDARD EVALUATION (standard labels only)
+=================================================================
+
+System                Precision   Recall       F1    TP    FP    FN
+------------------------------------------------------------
+Baseline                 0.0492   0.6471   0.0915    44   850    24
+Ruler before             0.0596   0.7794   0.1108    53   836    15
+Ruler after              0.0492   0.6471   0.0915    44   850    24
+
+=================================================================
+ENTITY COUNT BY LABEL
+=================================================================
+
+Label                       Baseline   Before    After
+-------------------------------------------------------
+CARDINAL                         138      138      138
+CLIMATE_EVENT                      0        8        5 *
+DATE                             256      256      256
+EVENT                              8        4        8
+FAC                                9        8        9
+GPE                              165      162      165
+LAW                                5       13        5
+LOC                               93       96       93
+MONEY                             63       63       63
+NORP                              21       21       21
+ORDINAL                            9        9        9
+ORG                              184      176      184
+PERCENT                          103      103      103
+PERSON                            36       36       36
+POLICY                             0        8        7 *
+PRODUCT                            6        6        6
+QUANTITY                          92       92       92
+REPORT                             0        2        0 *
+TIME                               8        8        8
+WORK_OF_ART                        6        5        6
+
+TOTAL                           1202     1214     1214
+  * = custom label (not in baseline)
+
+=================================================================
+QUALITATIVE EXAMPLES — CUSTOM LABELS
+=================================================================
+
+--- CLIMATE_EVENT ---
+  Text 2: ['COP28']
+    Context: ...At COP28 in Dubai, over 190 nations agreed to transition away from fossil fuels in energy systems. The United Arab Emira...
+  Text 10: ['COP28']
+    Context: ...China's Special Envoy for Climate Change Xie Zhenhua met with US Climate Envoy John Kerry in Sunnylands, California in N...
+  Text 47: ['COP26']
+    Context: ...India's updated Nationally Determined Contribution pledges to achieve 50% cumulative installed electric power capacity f...
+
+--- POLICY ---
+  Text 5: ['nationally determined contributions', 'loss and damage']
+    Context: ...UNFCCC Executive Secretary Simon Stiell addressed delegates at the Bonn Climate Change Conference in June 2024, emphasiz...
+  Text 45: ['net-zero']
+    Context: ...Costa Rica achieved 99.5% renewable electricity generation in 2023, drawing on hydropower, geothermal, wind, and solar s...
+  Text 47: ['Nationally Determined Contribution', 'net-zero']
+    Context: ...India's updated Nationally Determined Contribution pledges to achieve 50% cumulative installed electric power capacity f...
+
+--- REPORT ---
+  Text 1: ['Sixth Assessment Report']
+    Context: ...The IPCC released its Sixth Assessment Report in March 2023, warning that global temperatures could exceed 1.5 degrees C...
+  Text 8: ['State of Food and Agriculture 2023']
+    Context: ...FAO published its State of Food and Agriculture 2023 report, dedicating an entire chapter to the intersection of climate...
+    text_id                         entity_text entity_label  start_char  end_char
+27        5      Bonn Climate Change Conference        EVENT          63        93
+38        7             Climate Ambition Summit        EVENT          65        88
+8         2                               Dubai          GPE          12        17
+10        2                United Arab Emirates          GPE          56        75
+62       10                                  US          GPE          63        65
+60       10                               China          GPE           0         5
+18        4                              Jordan          GPE           0         6
+58        9                              Jordan          GPE         322       328
+54        9                          Bangladesh          GPE         207       217
+39        7                            New York          GPE          92       100
+65       10                          California          GPE         108       118
+51        9                              Songdo          GPE         110       116
+52        9                         South Korea          GPE         118       129
+40        7                     Paris Agreement          LAW         301       315
+29        5                     Paris Agreement          LAW         164       180
+32        6  Carbon Border Adjustment Mechanism          LAW          21        55
+67       10                     Paris Agreement          LAW         210       224
+56        9                         Congo Basin          LOC         267       278
+16        3                          South Asia          LOC         140       150
+15        3                  Sub-Saharan Africa          LOC         117       135
+64       10                          Sunnylands          LOC          96       106
